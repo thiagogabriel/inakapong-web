@@ -19,7 +19,8 @@ config :inaka_pong, InakaPongWeb.Endpoint,
   url: [scheme: "https", host: "nameless-castle-90436.herokuapp.com", port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/cache_manifest.json",
-  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE")
+  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE"),
+  api_key: Map.fetch!(System.get_env(), "API_KEY")
 
 
 # Configure your database

@@ -15,7 +15,8 @@ config :inaka_pong, InakaPongWeb.Endpoint,
   secret_key_base: "JVA7ytbdImY3FoD6q3LswO6/4tCFPNuuA7/57EM5EBY0wyx60VgA8fefB4xomcZ0",
   render_errors: [view: InakaPongWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: InakaPong.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+           adapter: Phoenix.PubSub.PG2],
+  api_key: "secret123"
 
 # Configures Elixir's Logger
 config :logger, :console,

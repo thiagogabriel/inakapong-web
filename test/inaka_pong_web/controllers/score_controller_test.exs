@@ -14,7 +14,12 @@ defmodule InakaPongWeb.ScoreControllerTest do
   end
 
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    {
+      :ok,
+      conn: conn
+            |> put_req_header("accept", "application/json")
+            |> put_req_header("x-api-key", "secret123")
+    }
   end
 
   describe "index" do
@@ -25,11 +30,11 @@ defmodule InakaPongWeb.ScoreControllerTest do
   end
 
   describe "create score" do
-    test "renders score when data is valid", %{conn: conn} do
-      conn = post conn, score_path(conn, :create), @create_attrs
+    test "renders score when data is valid", %{conn: orig_conn} do
+      conn = post orig_conn, score_path(orig_conn, :create), @create_attrs
       assert %{"id" => id} = json_response(conn, 201)
 
-      conn = get conn, score_path(conn, :show, id)
+      conn = get orig_conn, score_path(orig_conn, :show, id)
       assert json_response(conn, 200) == %{
         "id" => id,
         "name" => "some name",
@@ -45,11 +50,11 @@ defmodule InakaPongWeb.ScoreControllerTest do
   describe "update score" do
     setup [:create_score]
 
-    test "renders score when data is valid", %{conn: conn, score: %Score{id: id} = score} do
-      conn = put conn, score_path(conn, :update, score), @update_attrs
+    test "renders score when data is valid", %{conn: orig_conn, score: %Score{id: id} = score} do
+      conn = put orig_conn, score_path(orig_conn, :update, score), @update_attrs
       assert %{"id" => ^id} = json_response(conn, 200)
 
-      conn = get conn, score_path(conn, :show, id)
+      conn = get orig_conn, score_path(orig_conn, :show, id)
       assert json_response(conn, 200) == %{
         "id" => id,
         "name" => "some updated name",
@@ -65,11 +70,11 @@ defmodule InakaPongWeb.ScoreControllerTest do
   describe "delete score" do
     setup [:create_score]
 
-    test "deletes chosen score", %{conn: conn, score: score} do
-      conn = delete conn, score_path(conn, :delete, score)
+    test "deletes chosen score", %{conn: orig_conn, score: score} do
+      conn = delete orig_conn, score_path(orig_conn, :delete, score)
       assert response(conn, 204)
       assert_error_sent 404, fn ->
-        get conn, score_path(conn, :show, score)
+        get orig_conn, score_path(orig_conn, :show, score)
       end
     end
   end

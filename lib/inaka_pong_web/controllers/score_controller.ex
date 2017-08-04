@@ -6,6 +6,8 @@ defmodule InakaPongWeb.ScoreController do
 
   action_fallback InakaPongWeb.FallbackController
 
+  plug :ensure_api_key
+
   def index(conn, _params) do
     scores = Scores.list_scores()
     render(conn, "index.json", scores: scores)
@@ -39,6 +41,17 @@ defmodule InakaPongWeb.ScoreController do
     score = Scores.get_score!(id)
     with {:ok, %Score{}} <- Scores.delete_score(score) do
       send_resp(conn, :no_content, "")
+    end
+  end
+
+  def ensure_api_key(conn, _) do
+    api_key = Application.fetch_env!(:inaka_pong, InakaPongWeb.Endpoint)[:api_key]
+    case get_req_header(conn, "x-api-key") do
+      [^api_key] -> conn
+      _ -> conn
+            |> put_status(:bad_request)
+            |> json(%{ error: %{ message: "invalid api token" } })
+            |> halt
     end
   end
 end
