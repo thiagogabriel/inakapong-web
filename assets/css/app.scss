@@ -1,0 +1,60 @@
+@import "normalize";
+
+$tablet-size: "(max-width: 768px)";
+
+@font-face {
+  font-family: "LCD Solid";
+  src: url(/fonts/LCD_Solid.ttf);
+}
+
+.right {
+  text-align: right;
+}
+
+.center {
+  text-align: center;
+}
+
+.logo {
+  height: 150px;
+  width: 300px;
+}
+
+.scoreboard {
+  font-family: "LCD Solid";
+  margin: 0 auto;
+  max-width: 500px;
+
+  @media #{$tablet-size} {
+    margin: 0 1rem;
+  }
+
+  &__results {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+  }
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+$total-cols: 12;
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+
+  & > * {
+    flex: 0 0 100%;
+  }
+}
+
+
+@for $i from 1 through $total-cols {
+  .row .col-#{$i} {
+    flex: 0 0 #{percentage($i / $total-cols)};
+  }
+}

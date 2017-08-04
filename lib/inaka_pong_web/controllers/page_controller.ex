@@ -1,7 +1,9 @@
 defmodule InakaPongWeb.PageController do
   use InakaPongWeb, :controller
+  alias InakaPong.Scores
 
   def index(conn, _params) do
-    render conn, "index.html"
+    scores = Scores.list_scores()
+    render conn, "index.html", scores: scores
   end
 end

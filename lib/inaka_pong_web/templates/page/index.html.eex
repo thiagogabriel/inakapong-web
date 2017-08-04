@@ -1,36 +1,25 @@
-<div class="jumbotron">
-  <h2><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h2>
-  <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
+<div class="center">
+  <img class="logo" src="<%= static_path(@conn, "/images/pong-logo.png") %>">
 </div>
+<div class="scoreboard">
+  <h1 class="center">Scoreboard</h1>
 
-<div class="row marketing">
-  <div class="col-lg-6">
-    <h4>Resources</h4>
-    <ul>
-      <li>
-        <a href="http://phoenixframework.org/docs/overview">Guides</a>
-      </li>
-      <li>
-        <a href="https://hexdocs.pm/phoenix">Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-    </ul>
-  </div>
-
-  <div class="col-lg-6">
-    <h4>Help</h4>
-    <ul>
-      <li>
-        <a href="http://groups.google.com/group/phoenix-talk">Mailing list</a>
-      </li>
-      <li>
-        <a href="http://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">@elixirphoenix</a>
-      </li>
-    </ul>
+  <div class="scoreboard__results">
+    <%= if Enum.empty? @scores do %>
+      <div class="center">
+        It looks like no one played the game yet :(
+      </div>
+    <% else %>
+      <%= for score <- @scores do %>
+        <div class="row">
+          <div class="col-6">
+            <%= score.name %>
+          </div>
+          <div class="col-6 right">
+            <%= score.points %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
   </div>
 </div>
