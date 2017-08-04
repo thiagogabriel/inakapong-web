@@ -18,7 +18,7 @@ defmodule InakaPong.Scores do
 
   """
   def list_scores do
-    Repo.all(Score)
+    Repo.all(from s in Score, order_by: [desc: s.points])
   end
 
   @doc """
