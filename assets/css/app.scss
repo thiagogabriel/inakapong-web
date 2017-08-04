@@ -52,9 +52,64 @@ $total-cols: 12;
   }
 }
 
-
 @for $i from 1 through $total-cols {
   .row .col-#{$i} {
     flex: 0 0 #{percentage($i / $total-cols)};
   }
+}
+
+$logo-size: 90;
+$logo-bar-width: $logo-size - ($logo-size * .5);
+$logo-bar-height: $logo-bar-width / 5;
+
+.pong-logo {
+  display: inline-block;
+  padding: #{$logo-bar-height}px 0;
+  position: relative;
+
+  .top-line, .bottom-line {
+    position: absolute;
+    height: #{$logo-bar-height}px;
+    width: #{$logo-bar-width}px;
+    background-color: black;
+  }
+
+  .top-line {
+    left: 0;
+    top: 0;
+    animation:linear infinite alternate;
+    animation-name: left-to-right;
+    animation-duration: 5s;
+  }
+
+  .bottom-line {
+    right: 0;
+    bottom: 0;
+    animation:linear infinite alternate;
+    animation-name: right-to-left;
+    animation-duration: 5s;
+  }
+
+  .text {
+    text-transform: uppercase;
+    font-size: #{$logo-size}px;
+    font-weight: bold;
+    font-family: sans-serif;
+  }
+
+  .red {
+    color: #ff0202;
+  }
+}
+
+@keyframes left-to-right {
+  0% { left: 0;}
+  50%{ left : calc(100% - #{$logo-bar-width}px); }
+  100%{ left: 0;}
+}
+
+@keyframes right-to-left {
+  0% { right: 0;}
+  50%{ right : calc(100% - #{$logo-bar-width}px); }
+  100%{ right: 0;}
 }
