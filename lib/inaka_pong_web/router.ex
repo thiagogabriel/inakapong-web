@@ -20,7 +20,8 @@ defmodule InakaPongWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", InakaPongWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", InakaPongWeb do
+    pipe_through :api
+    resources "/scores", ScoreController, except: [:new, :edit]
+  end
 end
